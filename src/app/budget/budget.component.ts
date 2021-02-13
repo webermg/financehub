@@ -12,13 +12,10 @@ import {BudgetService} from '../budget.service'
 export class BudgetComponent implements OnInit {
   
   selected=-1;
-  toAdd = {
-    id: Date.now(),
-    date: "",
-    category: "",
-    subcategory: "",
-    amount: ""
-  }
+  date: string;
+  category: string;
+  subcategory: string;
+  amount: string;
   categories = categories;
   subcategories = subcategories;
   items: Item[];
@@ -27,13 +24,20 @@ export class BudgetComponent implements OnInit {
   constructor(private budgetService: BudgetService) { }
 
   ngOnInit(): void {
-    this.items = this.budgetService.getBudget();
+    this.refresh();
   }
 
-  add(item: Item): boolean {
+  add(): boolean {
     
-    if(!this.validateAmount(this.toAdd.amount)) return false;
-    this.items.push({...item});
+    if(!this.validateAmount(this.amount)) return false;
+    const toAdd: Item = {
+      id: Date.now(),
+      date: this.date,
+      category: this.category,
+      subcategory: this.subcategory,
+      amount: parseFloat(this.amount)
+    };
+    this.items.push(toAdd);
     this.reset();
     this.save();
     return true;
@@ -43,7 +47,11 @@ export class BudgetComponent implements OnInit {
     if(this.selected < 0) {
       this.selected = index;
     }
-    else this.selected = -1;
+    else {
+      if(this.selected === index) this.save();
+      else this.refresh();
+      this.selected = -1;
+    }
   }
 
   delete(id: number): void {
@@ -52,19 +60,22 @@ export class BudgetComponent implements OnInit {
   }
 
   reset(): void {
-    this.toAdd.id=Date.now();
-    this.toAdd.date = "";
-    this.toAdd.category = "";
-    this.toAdd.subcategory = "";
-    this.toAdd.amount = "";
+    this.date = "";
+    this.category = "";
+    this.subcategory = "";
+    this.amount = "";
   }
 
   save(): void {
     this.budgetService.saveBudget(this.items)
   }
 
+  refresh(): void {
+    this.items = this.budgetService.getBudget();
+  }
+
   validateAmount(amount: string): boolean {
-    return this.numberValidator.test(amount) && parseInt(amount) >= 0;
+    return this.numberValidator.test(amount) && parseFloat(amount) >= 0;
   }
 
 }

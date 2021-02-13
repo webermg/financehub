@@ -2,16 +2,16 @@
 
 <div>
   <!-- <form (submit)="add(toAdd)"> -->
-    <label class="form-label">Date: <input class="form-control" type="date" [(ngModel)]="toAdd.date"/></label>
-    <label class="form-label">Category: <select class="form-select" [(ngModel)]="toAdd.category">
+    <label class="form-label">Date: <input class="form-control" type="date" [(ngModel)]="date"/></label>
+    <label class="form-label">Category: <select class="form-select" [(ngModel)]="category">
       <option *ngFor="let category of categories" value = {{category}}>{{category}}</option>
     </select></label>
-    <label *ngIf="toAdd.category && subcategories[toAdd.category].length" class="form-label">Subcategory: <select class="form-select" [(ngModel)]="toAdd.subcategory">
-      <option *ngFor="let subcategory of subcategories[toAdd.category]" value = {{subcategory}}>{{subcategory}}</option>
+    <label *ngIf="category && subcategories[category].length" class="form-label">Subcategory: <select class="form-select" [(ngModel)]="subcategory">
+      <option *ngFor="let subcategory of subcategories[category]" value = {{subcategory}}>{{subcategory}}</option>
     </select></label>
-    <label class="form-label">Amount: <input class="form-control" [(ngModel)]="toAdd.amount"/></label>
+    <label class="form-label">Amount: <input type="number" class="form-control" [(ngModel)]="amount"/></label>
   <!-- </form> -->
-  <button class="btn btn-primary" (click)="add(toAdd)">Add</button>
+  <button class="btn btn-primary" (click)="add()">Add</button>
 </div>
 
 <h2>Items</h2>
@@ -29,10 +29,14 @@
   <tbody>
     <tr *ngFor="let item of items">
       <td>{{item.id}}</td>
-      <td>{{item.date}}</td>
-      <td>{{item.category}}</td>
-      <td>{{item.subcategory}}</td>
-      <td>{{item.amount}}</td>
+      <td><input *ngIf="selected===item.id" class="form-control" type="date" [(ngModel)]="item.date"/>{{selected === item.id ? "" : item.date}}</td>
+      <td><select *ngIf="selected===item.id" class="form-select" [(ngModel)]="item.category">
+        <option *ngFor="let category of categories" value = {{category}}>{{category}}</option>
+      </select>{{selected === item.id ? "" : item.category}}</td>
+      <td><select *ngIf="selected===item.id && item.category && subcategories[item.category].length" class="form-select" [(ngModel)]="item.subcategory">
+        <option *ngFor="let subcategory of subcategories[item.category]" value = {{subcategory}}>{{subcategory}}</option>
+      </select>{{selected === item.id ? "" : item.subcategory}}</td>
+      <td><input *ngIf="selected===item.id" type="number" class="form-control" [(ngModel)]="item.amount"/>{{selected === item.id ? "" : item.amount}}</td>
       <td><button class="btn btn-success" (click)="update(item.id)"><span >{{selected !== item.id ? 'Upd' : 'Save'}}</span></button></td>
       <td><button class="btn btn-danger" data-id={{item.id}} (click)="delete(item.id)">Del</button></td>
     </tr>

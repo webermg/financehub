@@ -3,5 +3,5 @@ export interface Item {
   date: string;
   category: string;
   subcategory: string;
-  amount: string;
+  amount: number;
 }
