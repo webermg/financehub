@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Item } from './item'
 import { categories } from './categories'
 import { subcategories } from './subcategories'
+import {BudgetService} from '../budget.service'
 
 @Component({
   selector: 'app-budget',
@@ -19,16 +21,16 @@ export class BudgetComponent implements OnInit {
   }
   categories = categories;
   subcategories = subcategories;
-  items = []
+  items: Item[];
   numberValidator = /([0-9]*\.)?[0-9]{0,2}/
 
-  constructor() { }
+  constructor(private budgetService: BudgetService) { }
 
   ngOnInit(): void {
-    if(window.localStorage.getItem("budgetData")) this.items = JSON.parse(window.localStorage.getItem("budgetData"));
+    this.items = this.budgetService.getBudget();
   }
 
-  add(item: Object): boolean {
+  add(item: Item): boolean {
     
     if(!this.validateAmount(this.toAdd.amount)) return false;
     this.items.push({...item});
@@ -58,7 +60,7 @@ export class BudgetComponent implements OnInit {
   }
 
   save(): void {
-    window.localStorage.setItem("budgetData",JSON.stringify(this.items))
+    this.budgetService.saveBudget(this.items)
   }
 
   validateAmount(amount: string): boolean {
