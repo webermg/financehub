@@ -7,12 +7,14 @@ import { AppComponent } from './app.component';
 import { CalculatorComponent } from './calculator/calculator.component';
 import { BudgetComponent } from './budget/budget.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     CalculatorComponent,
-    BudgetComponent
+    BudgetComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
