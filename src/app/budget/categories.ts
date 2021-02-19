@@ -1,3 +1,3 @@
 export const categories: string[] = [
-  "food","bills","gas","house","shopping"
+  "income","food","bills","gas","house","shopping"
 ];

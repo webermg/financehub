@@ -9,6 +9,7 @@ import { BudgetComponent } from './budget/budget.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HomeComponent } from './home/home.component';
 import { NavbarComponent } from './navbar/navbar.component';
+import { BudgetChartComponent } from './budget-chart/budget-chart.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { NavbarComponent } from './navbar/navbar.component';
     CalculatorComponent,
     BudgetComponent,
     HomeComponent,
-    NavbarComponent
+    NavbarComponent,
+    BudgetChartComponent
   ],
   imports: [
     BrowserModule,
