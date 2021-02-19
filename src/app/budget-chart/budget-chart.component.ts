@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BudgetService } from '../budget.service'
 import { Item } from '../budget/item'
+import { TimeSeriesChartComponent } from '../charts/time-series-chart/time-series-chart.component'
 
 @Component({
   selector: 'app-budget-chart',

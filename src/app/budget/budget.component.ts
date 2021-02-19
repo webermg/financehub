@@ -32,14 +32,16 @@ export class BudgetComponent implements OnInit {
     if(!this.validateAmount(this.amount)) return false;
     const toAdd: Item = {
       id: Date.now(),
-      date: this.date,
+      date: new Date(this.date),
       category: this.category,
       subcategory: this.subcategory,
       amount: parseFloat(this.amount)
     };
+    console.log(toAdd.date)
     this.items.push(toAdd);
     this.reset();
     this.save();
+    this.refresh();
     return true;
   }
 

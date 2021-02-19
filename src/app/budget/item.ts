@@ -1,6 +1,6 @@
 export interface Item {
   id: number;
-  date: string;
+  date: Date;
   category: string;
   subcategory: string;
   amount: number;
